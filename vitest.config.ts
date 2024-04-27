@@ -1,15 +1,15 @@
 import swc from "unplugin-swc";
 import { loadEnv } from "vite";
-import { configDefaults, defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
-  test:{
+  test: {
     root: "./",
     globals: true,
     isolate: false,
     passWithNoTests: true,
     include: [`tests/**/*.test.ts`],
-    exclude: [ ...configDefaults.exclude, "node_modules"],
+    exclude: [...configDefaults.exclude, "node_modules"],
     env: loadEnv("test", process.cwd(), ""),
     coverage: {
       provider: "istanbul",
@@ -18,5 +18,5 @@ export default defineConfig({
       include: ["src/**/*.ts"],
     },
   },
-  plugins: [swc.vite({ module: { type: "es6" } })]
-})
+  plugins: [swc.vite({ module: { type: "es6" } })],
+});

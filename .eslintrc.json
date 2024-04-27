@@ -15,6 +15,7 @@
     "plugin:unicorn/recommended",
     "plugin:node/recommended"
   ],
+  "ignorePatterns": ["coverage/", "**/coverage/", "dist/", "**/dist/", "node_modules/"],
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
@@ -23,6 +24,7 @@
     "unicorn/prevent-abbreviations": "off",
     "no-console": "warn",
     "node/no-missing-import": "off",
+    "@typescript-eslint/require-await": "off",
     "node/no-unsupported-features/es-syntax": [
       "error",
       { "ignores": ["modules"] }

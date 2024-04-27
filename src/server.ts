@@ -1,6 +1,10 @@
-import http from 'http';
-import express, { Express } from 'express';
-import { config } from '@src/config/config';
+import "./logger";
+
+import http from "node:http";
+
+import express, { Express } from "express";
+
+import { config } from "@src/config/config";
 
 export class Server {
   private readonly app: Express;
@@ -13,12 +17,12 @@ export class Server {
   }
 
   async start(): Promise<void> {
-    this.app.get('/health', (req, res) => {
-      res.status(200).send('OK');
+    this.app.get("/health", (req, res) => {
+      res.status(200).send("OK");
     });
 
     this.httpServer = this.app.listen(this.port, () => {
-      console.log(`Server running on http://localhost:${this.port}`);
+      logger.info(`Server running on http://localhost:${this.port}`);
     });
   }
 
