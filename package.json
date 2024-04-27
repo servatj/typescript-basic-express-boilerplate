@@ -9,6 +9,7 @@
     "test": "rimraf coverage .nyc_output && vitest run --coverage --config vitest.config.ts",
     "build": "npm run validate-typescript && npm run build:clean && npm run generate-dist",
     "build:clean": "rimraf dist; exit 0",
+    "prepare": "husky",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",
     "validate-typescript": "tsc -p tsconfig.prod.json --noEmit",
