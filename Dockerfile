@@ -1,23 +1,51 @@
-# Use the official Node.js 14 LTS image as a parent image
-FROM node:14
+FROM node:20-alpine3.18 AS base
 
-# Set the working directory
-WORKDIR /usr/src/app
+ENV DIR /app
+WORKDIR $DIR
+ARG NPM_TOKEN
 
-# Copy package.json and package-lock.json (or npm-shrinkwrap.json) into the container
-COPY package*.json ./
+FROM base AS dev
 
-# Install any dependencies
-RUN npm install
+ENV NODE_ENV=development
 
-# Copy the rest of your application's code
-COPY . .
+COPY package*.json .
 
-# Build the project
-RUN npm run build
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ".npmrc" && \
+    npm ci && \
+    rm -f .npmrc
 
-# Inform Docker that the container is listening on the specified port at runtime.
-EXPOSE 3000
+COPY tsconfig*.json .
+COPY .swcrc .
+COPY src src
 
-# Run the app when the container launches
-CMD ["npm", "start"]
+EXPOSE $PORT
+CMD ["npm", "run", "dev"]
+
+FROM base AS build
+
+RUN apk update && apk add --no-cache dumb-init=1.2.5-r2
+
+COPY package*.json .
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ".npmrc" && \
+    npm ci && \
+    rm -f .npmrc
+
+COPY tsconfig*.json .
+COPY .swcrc .
+COPY src src
+
+RUN npm run build && \
+    npm prune --production
+
+FROM base AS production
+
+ENV NODE_ENV=production
+ENV USER=node
+
+COPY --from=build /usr/bin/dumb-init /usr/bin/dumb-init
+COPY --from=build $DIR/node_modules node_modules
+COPY --from=build $DIR/dist dist
+
+USER $USER
+EXPOSE $PORT
+CMD ["dumb-init", "node", "dist/main.js"]
