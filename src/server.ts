@@ -13,7 +13,7 @@ export class Server {
   }
 
   async start(): Promise<void> {
-    this.app.get('/healthcheck', (req, res) => {
+    this.app.get('/health', (req, res) => {
       res.status(200).send('OK');
     });
 
@@ -24,5 +24,9 @@ export class Server {
 
   async stop(): Promise<void> {
     this.httpServer?.close();
+  }
+
+  getHttpServer(): http.Server | undefined {
+    return this.httpServer;
   }
 }
