@@ -9,6 +9,8 @@
     "test": "rimraf coverage .nyc_output && vitest run --coverage --config vitest.config.ts",
     "build": "npm run validate-typescript && npm run build:clean && npm run generate-dist",
     "build:clean": "rimraf dist; exit 0",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "npm run lint -- --fix",
     "validate-typescript": "tsc -p tsconfig.prod.json --noEmit",
     "generate-dist": "swc ./src -d dist --strip-leading-paths"
   },
@@ -17,6 +19,9 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/types": "^19.0.3",
     "@swc/cli": "^0.3.12",
     "@swc/core": "^1.5.1",
     "@types/jest": "^26.0.15",
