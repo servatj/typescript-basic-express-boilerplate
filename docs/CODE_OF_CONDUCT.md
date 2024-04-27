@@ -1,0 +1,3 @@
+Security Policy
+Reporting a Vulnerability
+Please report security issues to jservatlorca@gmail.com
