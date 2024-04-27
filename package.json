@@ -16,8 +16,10 @@
     "generate-dist": "swc ./src -d dist --strip-leading-paths"
   },
   "dependencies": {
+    "@types/fs-extra": "^11.0.4",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
+    "fs-extra": "^11.2.0",
     "winston": "^3.13.0",
     "winston-transport": "^4.7.0"
   },
