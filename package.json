@@ -7,6 +7,7 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "test": "rimraf coverage .nyc_output && vitest run --coverage --config vitest.config.ts",
+    "test:performance": "k6 run tests/performance/get-health.js",
     "build": "npm run validate-typescript && npm run build:clean && npm run generate-dist",
     "build:clean": "rimraf dist; exit 0",
     "prepare": "husky",
@@ -22,6 +23,9 @@
     "fs-extra": "^11.2.0",
     "winston": "^3.13.0",
     "winston-transport": "^4.7.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
