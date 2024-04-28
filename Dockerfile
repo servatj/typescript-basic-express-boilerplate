@@ -10,7 +10,7 @@ ENV NODE_ENV=development
 
 COPY package*.json .
 
-RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ".npmrc" && \
+RUN echo "//registry.npmjs.org/:_authToken=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" > ".npmrc" && \
     npm ci && \
     rm -f .npmrc
 
@@ -26,10 +26,9 @@ FROM base AS build
 RUN apk update && apk add --no-cache dumb-init=1.2.5-r2
 
 COPY package*.json .
-RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ".npmrc" && \
+RUN echo "//registry.npmjs.org/:_authToken=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" > ".npmrc" && \
     npm ci && \
     rm -f .npmrc
-
 COPY tsconfig*.json .
 COPY .swcrc .
 COPY src src
@@ -48,4 +47,4 @@ COPY --from=build $DIR/dist dist
 
 USER $USER
 EXPOSE $PORT
-CMD ["dumb-init", "node", "dist/main.js"]
+CMD ["dumb-init", "node", "dist/index.js"]
